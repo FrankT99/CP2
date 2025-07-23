@@ -1,4 +1,4 @@
-## Networking
+## General Networking
 resource "azurerm_public_ip" "public_ip_1" {
   name                = "Public_IP_1"
   location            = azurerm_resource_group.rg.location
@@ -10,9 +10,9 @@ resource "azurerm_public_ip" "public_ip_1" {
     enviroment = "CP2"
   }
 
-  /*lifecycle {
+  lifecycle {
     prevent_destroy = true
-  }*/
+  }
 }
 
 resource "azurerm_virtual_network" "vnet" {
@@ -33,6 +33,8 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+
+## Networking VM
 resource "azurerm_network_security_group" "sec_group_ssh" {
   name                = "VM-CP2-Sec_group_ssh"
   location            = azurerm_resource_group.rg.location
