@@ -9,10 +9,6 @@ resource "azurerm_public_ip" "public_ip_1" {
   tags = {
     enviroment = "CP2"
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "azurerm_virtual_network" "vnet" {

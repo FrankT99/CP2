@@ -61,6 +61,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
+  identity {
+    type = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.acr_identity.id]
+  }
+
   tags = {
     enviroment = "CP2"
   }
