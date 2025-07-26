@@ -62,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   identity {
-    type = "UserAssigned"
+    type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.acr_identity.id]
   }
 

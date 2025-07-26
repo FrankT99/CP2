@@ -1,0 +1,263 @@
+Terraform will perform the following actions:
+
+  # azurerm_container_registry.acr will be created
+  + resource "azurerm_container_registry" "acr" {
+      + admin_enabled                 = false
+      + admin_password                = (sensitive value)
+      + admin_username                = (known after apply)
+      + data_endpoint_host_names      = (known after apply)
+      + encryption                    = (known after apply)
+      + export_policy_enabled         = true
+      + id                            = (known after apply)
+      + location                      = "westeurope"
+      + login_server                  = (known after apply)
+      + name                          = "ACRvCP2"
+      + network_rule_bypass_option    = "AzureServices"
+      + network_rule_set              = (known after apply)
+      + public_network_access_enabled = true
+      + resource_group_name           = "RG-CP2"
+      + sku                           = "Standard"
+      + tags                          = {
+          + "enviroment" = "CP2"
+        }
+      + trust_policy_enabled          = false
+      + zone_redundancy_enabled       = false
+    }
+
+  # azurerm_linux_virtual_machine.vm will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_username                                         = (sensitive value)
+      + allow_extension_operations                             = true
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = true
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "VM-CP2"
+      + network_interface_ids                                  = (known after apply)
+      + patch_assessment_mode                                  = "ImageDefault"
+      + patch_mode                                             = "ImageDefault"
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = true
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "RG-CP2"
+      + size                                                   = "Standard_A1_v2"
+      + tags                                                   = {
+          + "enviroment" = "CP2"
+        }
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + admin_ssh_key {
+          # At least one attribute in this block is (or was) sensitive,
+          # so its contents will not be displayed.
+        }
+
+      + identity {
+          + identity_ids = (known after apply)
+          + principal_id = (known after apply)
+          + tenant_id    = (known after apply)
+          + type         = "UserAssigned"
+        }
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = "VM-CP2-disk"
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-LTS"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "westeurope"
+      + mac_address                    = (known after apply)
+      + name                           = "VM-CP2-nic"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "RG-CP2"
+      + tags                           = {
+          + "enviroment" = "CP2"
+        }
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "VM-CP2-ip_config"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = "10.0.1.10"
+          + private_ip_address_allocation                      = "Static"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.sec_group_ssh-vm-cp2 will be created
+  + resource "azurerm_network_interface_security_group_association" "sec_group_ssh-vm-cp2" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = (known after apply)
+    }
+
+  # azurerm_network_security_group.sec_group_ssh will be created
+  + resource "azurerm_network_security_group" "sec_group_ssh" {
+      + id                  = (known after apply)
+      + location            = "westeurope"
+      + name                = "VM-CP2-Sec_group_ssh"
+      + resource_group_name = "RG-CP2"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "SSH"
+              + priority                                   = 1001
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+          + {
+              + access                                     = "Allow"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "80"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "HTTP"
+              + priority                                   = 1002
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+        ]
+    }
+
+  # azurerm_public_ip.public_ip_1 will be created
+  + resource "azurerm_public_ip" "public_ip_1" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "westeurope"
+      + name                    = "Public_IP_1"
+      + resource_group_name     = "RG-CP2"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+      + tags                    = {
+          + "enviroment" = "CP2"
+        }
+    }
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "RG-CP2"
+      + tags     = {
+          + "enviroment" = "CP2"
+        }
+    }
+
+  # azurerm_role_assignment.acr_push_pull will be created
+  + resource "azurerm_role_assignment" "acr_push_pull" {
+      + condition_version                = (known after apply)
+      + id                               = (known after apply)
+      + name                             = (known after apply)
+      + principal_id                     = (known after apply)
+      + principal_type                   = (known after apply)
+      + role_definition_id               = (known after apply)
+      + role_definition_name             = "AcrPush"
+      + scope                            = (known after apply)
+      + skip_service_principal_aad_check = (known after apply)
+    }
+
+  # azurerm_subnet.subnet will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet1"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "RG-CP2"
+      + virtual_network_name                          = "vnet"
+    }
+
+  # azurerm_user_assigned_identity.acr_identity will be created
+  + resource "azurerm_user_assigned_identity" "acr_identity" {
+      + client_id           = (known after apply)
+      + id                  = (known after apply)
+      + location            = "westeurope"
+      + name                = "ACR-CP2-Identity"
+      + principal_id        = (known after apply)
+      + resource_group_name = "RG-CP2"
+      + tenant_id           = (known after apply)
+    }
+
+  # azurerm_virtual_network.vnet will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "westeurope"
+      + name                           = "vnet"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "RG-CP2"
+      + subnet                         = (known after apply)
+      + tags                           = {
+          + "enviroment" = "CP2"
+        }
+    }
+
+Plan: 11 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + resource_group_id = (known after apply)
+  + vm_id             = (known after apply)
+  + vm_private_ip     = (known after apply)
+  + vm_public_ip      = (known after apply)
