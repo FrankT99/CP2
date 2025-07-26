@@ -1,0 +1,21 @@
+- name: Obtener token de mi ACR
+  command: >
+    az acr login --name {{ acr_name }} --expose-token --output json
+  register: acr_login
+  no_log: true
+
+- name: Autenticar Podman en ACR
+  containers.podman.podman_login:
+    registry: "{{ (acr_login.stdout | from_json).loginServer }}"
+    username: "{{ (acr_login.stdout | from_json).username }}"
+    password: "{{ (acr_login.stdout | from_json).accessToken }}"
+  no_log: true
+
+- name: Copiar imagen nginx de Docker Hub a ACR
+  local.skopeo.skopeo_copy:
+    src_image: "docker://docker.io/library/nginx:latest"
+    dest_image: "docker://{{ acr_registry_url }}/nginx:casopractico2"
+    dest_username: "{{ (acr_login.stdout | from_json).username }}"
+    dest_password: "{{ (acr_login.stdout | from_json).accessToken }}"
+  no_log: true
+

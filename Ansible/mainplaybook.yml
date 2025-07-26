@@ -1,0 +1,17 @@
+---
+- name: CP2 - Desplegar nginx desde mi ACR con Podman en mi Ubuntu AZ VM
+  hosts: VM-CP2
+  become: yes
+  gather_facts: yes
+  vars:
+    VM_CP2_Public_IP: "{{ hostvars['VM-CP2'].ansible_host }}"
+    acr_name: "acrvcp2"
+    acr_registry_url: "acrvcp2.azurecr.io"
+    nginx_image: "nginx:casopractico2"
+    container_name: "nginx-casopractico2"
+    
+  roles:
+    - apps-setup
+    - azure-auth  
+    - acr-images-tasks
+    - nginx-container

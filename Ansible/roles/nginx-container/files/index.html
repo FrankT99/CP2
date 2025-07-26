@@ -1,0 +1,232 @@
+<!-- ESTE HTML LO HE GENERADO CON IA -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CP2 - Nginx en Azure Container Registry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-card h3 {
+            color: #ffd93d;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(76, 175, 80, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            margin: 1rem 0;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .tech-stack {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 2rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CP2 Deployment</h1>
+        <p class="subtitle">Nginx desplegado desde Azure Container Registry con Ansible + Podman</p>
+        
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>Servicio Activo</span>
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-card">
+                <h3>🏗️ Infraestructura</h3>
+                <p>Desplegada con Terraform</p>
+            </div>
+
+            <div class="info-card">
+                <h3>☁️ Registry</h3>
+                <p>Azure Container Registry (ACR)</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🤖 Automatización</h3>
+                <p>Desplegado con Ansible</p>
+            </div>
+
+            <div class="info-card">
+                <h3>📦 Imagen</h3>
+                <p>Transferida con Skopeo</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🐳 Contenedor</h3>
+                <p>Podman + Systemd</p>
+            </div>
+
+            <div class="info-card">
+                <h3>🌐 Servidor Web</h3>
+                <p>Nginx ejecutándose en contenedor Podman</p>
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <span class="tech-badge">Terraform</span>
+            <span class="tech-badge">Nginx</span>
+            <span class="tech-badge">Podman</span>
+            <span class="tech-badge">Ansible</span>
+            <span class="tech-badge">Azure ACR</span>
+            <span class="tech-badge">Ubuntu</span>
+        </div>
+
+        <div class="footer">
+            <p>✨ Imagen construida con Containerfile personalizado</p>
+            <p id="timestamp"></p>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar timestamp de carga
+        document.getElementById('timestamp').textContent = 
+            'Cargado: ' + new Date().toLocaleString('es-ES');
+    </script>
+</body>
+</html>

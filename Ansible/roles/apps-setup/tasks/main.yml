@@ -1,0 +1,34 @@
+- name: Instalar dependencias
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - apt-transport-https
+      - lsb-release
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: Agregar clave Azure CLI
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Agregar repositorio de Azure CLI
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release }} main"
+    state: present
+    filename: azure-cli
+
+- name: Actualizar repositorios
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Instalar apps
+  apt:
+    name:
+      - podman
+      - azure-cli
+      - skopeo
+    update_cache: yes
+    state: present

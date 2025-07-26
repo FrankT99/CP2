@@ -1,0 +1,4 @@
+- name: Autenticacion en Azure
+  command: az login --identity
+  register: login_result
+  no_log: true #ocultar resultado

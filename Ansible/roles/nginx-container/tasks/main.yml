@@ -1,0 +1,47 @@
+- name: Crear carpeta para mi index personalizado
+  ansible.builtin.file:
+    path: /opt/nginx-index
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Copiar index.html personalizado
+  ansible.builtin.copy:
+    src: index.html
+    dest: /opt/nginx-index/index.html
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: Descargar imagen nginx desde ACR
+  containers.podman.podman_image:
+    name: "{{ acr_registry_url }}/{{ nginx_image }}"
+    pull: true
+    state: present
+
+- name: Crear y ejecutar contenedor nginx
+  containers.podman.podman_container:
+    name: "{{ container_name }}"
+    image: "{{ acr_registry_url }}/{{ nginx_image }}"
+    state: started
+    detach: true
+    ports:
+      - "80:80"
+    volumes:
+      - "/opt/nginx-index/index.html:/usr/share/nginx/html/index.html"
+    restart_policy: always
+    healthcheck: #comprobar si funciona
+      test: ["CMD", "curl", "-f", "{{ VM_CP2_Public_IP }}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+- name: Generar servicio systemd para el contenedor
+  containers.podman.podman_generate_systemd:
+    name: "{{ container_name }}"
+    dest: "/etc/systemd/system/"
+    restart_policy: always
+  notify: 
+    - Recargar systemd
+    - Habilitar servicio contenedor
